@@ -33,7 +33,7 @@ def prefix(func, prefix: str):
 
 @prefix('angle')
 def angle():
-    # \a･\b / |\a||\b|
+    # cosθ = \a･\b / |\a||\b|
     a = V(1, 2)
     b = V(3, 1)
 
