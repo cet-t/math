@@ -1,11 +1,16 @@
 import dataclasses
 import numpy as np
 
+rad2deg: float = 180 * np.pi
+
 
 @dataclasses.dataclass
 class V:
     x: float
     y: float
+
+    def __str__(self) -> str:
+        return f'({self.x},{self.y})'
 
 
 def deco_s_deco(func):
@@ -33,7 +38,7 @@ def prefix(func, prefix: str):
 
 @prefix('angle')
 def angle():
-    # cosθ = \a･\b / |\a||\b|
+    #! cosθ = \a･\b / |\a||\b|
     a = V(1, 2)
     b = V(3, 1)
 
@@ -52,11 +57,43 @@ def angle():
     print('θ: ', cos_theta)
 
     # radian to degree
-    deg = np.arccos(cos_theta) * (180 / np.pi)
-    print('deg:', deg)
+    rad2deg = (180 / np.pi)
+    theta = np.arccos(cos_theta) * rad2deg
+    theta2 = np.arccos(dot / lal / lbl) * rad2deg
+    print('θ:', theta, '\nθ2:', theta2)  # θ ≒ 45
 
-    # print(np.cos(deg))
+
+@prefix('polor')
+def polor():
+    #! x=rcosθ, y=rsinθ
+    a = V(2, np.pi/3)
+    ax = a.x * np.cos(a.y)
+    ay = a.x * np.sin(a.y)
+    print('a:', V(ax, ay))  # (1, √3)
+
+    b = V(np.sqrt(2), np.pi/4)
+    bx = b.x * np.cos(b.y)
+    by = b.x * np.sin(b.y)
+    print('b:', V(bx, by))  # (1, 1)
+
+    c = V(4, 5/6*np.pi)
+    cx = c.x * np.cos(c.y)
+    cy = c.x * np.sin(c.y)
+    print('c:', V(cx, cy))  # (-2√3, 2)
+
+    d = V(3, np.pi)
+    dx = d.x * np.cos(d.y)
+    dy = d.x * np.sin(d.y)
+    print('d:', V(dx, dy))  # (-3, 0)
+
+
+def polor_to_rectangular(a: V) -> V:
+    '''極座標を直交座標に変換'''
+    x = a.x * np.cos(a.y)
+    y = a.x * np.sin(a.y)
+    return V(x, y)
 
 
 if __name__ == '__main__':
-    angle()
+    # angle()
+    polor()
