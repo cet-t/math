@@ -1,7 +1,8 @@
 import dataclasses
+from typing import Any, Callable
 import numpy as np
 
-rad2deg: float = 180 * np.pi
+rad2deg: float = 180 / np.pi
 
 
 @dataclasses.dataclass
@@ -12,22 +13,44 @@ class V:
     def __str__(self) -> str:
         return f'({self.x},{self.y})'
 
+    def mag(self) -> float:
+        return np.sqrt(self.x ** 2 + self.y ** 2)
 
-def deco_s_deco(func):
+    @staticmethod
+    def dot(a, b) -> float:
+        return a.x * b.x + a.y * b.y
+
+    @staticmethod
+    def angle(a, b) -> float:
+        # cosθ = \a･\b / |\a||\b|
+        lal: float = a.mag()
+        lbl: float = b.mag()
+        dot: float = V.dot(a, b)
+        theta: float = np.arccos(dot / (lal * lbl))
+        return theta * rad2deg
+
+    @staticmethod
+    def polor_to_rectangular(a):
+        x: float = a.x * np.cos(a.y)
+        y: float = a.x * np.sin(a.y)
+        return V(x, y)
+
+
+def deco_s_deco(func) -> Callable[..., Any]:
     '''https://qiita.com/nshinya/items/b6746a0c07e9e20389e8'''
-    def param(*args, **kwargs):
-        def wrap(f):
+    def param(*args, **kwargs) -> Callable[..., Any]:
+        def wrap(f) -> Any:
             return func(f, *args, **kwargs)
         return wrap
     return param
 
 
 @deco_s_deco
-def prefix(func, prefix: str):
-    def wrap(*args, **kwargs):
+def prefix(func, prefix: str) -> Callable[..., Any]:
+    def wrap(*args, **kwargs) -> Any:
         line = '*---*'
         print(line, prefix, line)
-        r = func(*args, **kwargs)
+        r: Any = func(*args, **kwargs)
         sfx: str = ''
         for i in range(end := len(prefix) + 2 + len(line) * 2):
             sfx += '*' if i == 0 or i == end-1 else '-'
@@ -38,7 +61,6 @@ def prefix(func, prefix: str):
 
 @prefix('angle')
 def angle():
-    #! cosθ = \a･\b / |\a||\b|
     a = V(1, 2)
     b = V(3, 1)
 
@@ -57,7 +79,6 @@ def angle():
     print('θ: ', cos_theta)
 
     # radian to degree
-    rad2deg = (180 / np.pi)
     theta = np.arccos(cos_theta) * rad2deg
     theta2 = np.arccos(dot / lal / lbl) * rad2deg
     print('θ:', theta, '\nθ2:', theta2)  # θ ≒ 45
@@ -87,13 +108,9 @@ def polor():
     print('d:', V(dx, dy))  # (-3, 0)
 
 
-def polor_to_rectangular(a: V) -> V:
-    '''極座標を直交座標に変換'''
-    x = a.x * np.cos(a.y)
-    y = a.x * np.sin(a.y)
-    return V(x, y)
-
-
 if __name__ == '__main__':
     # angle()
-    polor()
+    # polor()
+
+    print(V.angle(V(1, 2), V(3, 1)))
+    print(V.polor_to_rectangular(V(5, 30)))
