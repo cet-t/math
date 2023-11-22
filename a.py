@@ -1,8 +1,9 @@
 import dataclasses
 from typing import Any, Callable
-import numpy as np
+from numpy import *
 
-rad2deg: float = 180 / np.pi
+r2d: float = 180 / pi
+d2r: float = pi / 180
 
 
 @dataclasses.dataclass
@@ -14,7 +15,7 @@ class V:
         return f'({self.x},{self.y})'
 
     def mag(self) -> float:
-        return np.sqrt(self.x ** 2 + self.y ** 2)
+        return sqrt(self.x ** 2 + self.y ** 2)
 
     @staticmethod
     def dot(a, b) -> float:
@@ -26,13 +27,13 @@ class V:
         lal: float = a.mag()
         lbl: float = b.mag()
         dot: float = V.dot(a, b)
-        theta: float = np.arccos(dot / (lal * lbl))
-        return theta * rad2deg
+        theta: float = arccos(dot / (lal * lbl))
+        return theta * r2d
 
     @staticmethod
-    def polor_to_rectangular(a):
-        x: float = a.x * np.cos(a.y)
-        y: float = a.x * np.sin(a.y)
+    def polar_to_rectangular(a):
+        x: float = a.x * cos(a.y)
+        y: float = a.x * sin(a.y)
         return V(x, y)
 
 
@@ -65,52 +66,79 @@ def angle():
     b = V(3, 1)
 
     # magnitude
-    lal = np.sqrt(a.x ** 2 + a.y ** 2)
-    lbl = np.sqrt(b.x ** 2 + b.y ** 2)
+    lal: float = sqrt(a.x ** 2 + a.y ** 2)
+    lbl: float = sqrt(b.x ** 2 + b.y ** 2)
     print('|a|:', lal)
     print('|b|:', lbl)
 
     # dot
-    dot = a.x * b.x + a.y * b.y
+    dot: float = a.x * b.x + a.y * b.y
     print('dot:', dot)
 
     # cosθ
-    cos_theta = dot / (lal * lbl)
-    print('θ: ', cos_theta)
+    cos8: float = dot / (lal * lbl)
+    cos82: float = dot / lal / lbl
+    print(cos8)
 
     # radian to degree
-    theta = np.arccos(cos_theta) * rad2deg
-    theta2 = np.arccos(dot / lal / lbl) * rad2deg
-    print('θ:', theta, '\nθ2:', theta2)  # θ ≒ 45
+    theta = arccos(cos8) * r2d
+    theta2 = arccos(cos82) * r2d
+    print('θ:', theta, '\nθ2:', theta2)  # cos45°
 
 
 @prefix('polor')
-def polor():
+def polar():
     #! x=rcosθ, y=rsinθ
-    a = V(2, np.pi/3)
-    ax = a.x * np.cos(a.y)
-    ay = a.x * np.sin(a.y)
+    a = V(2, pi/3)
+    ax = a.x * cos(a.y)
+    ay = a.x * sin(a.y)
     print('a:', V(ax, ay))  # (1, √3)
 
-    b = V(np.sqrt(2), np.pi/4)
-    bx = b.x * np.cos(b.y)
-    by = b.x * np.sin(b.y)
+    b = V(sqrt(2), pi/4)
+    bx = b.x * cos(b.y)
+    by = b.x * sin(b.y)
     print('b:', V(bx, by))  # (1, 1)
 
-    c = V(4, 5/6*np.pi)
-    cx = c.x * np.cos(c.y)
-    cy = c.x * np.sin(c.y)
+    c = V(4, 5/6*pi)
+    cx = c.x * cos(c.y)
+    cy = c.x * sin(c.y)
     print('c:', V(cx, cy))  # (-2√3, 2)
 
-    d = V(3, np.pi)
-    dx = d.x * np.cos(d.y)
-    dy = d.x * np.sin(d.y)
+    d = V(3, pi)
+    dx = d.x * cos(d.y)
+    dy = d.x * sin(d.y)
     print('d:', V(dx, dy))  # (-3, 0)
+
+
+@prefix("sannkakuhi")
+def tri() -> None:
+    # cos(x) = sin(90°-x)
+    # sin(x) = cos(90°-x)
+    # 1/tan(x) = tan(90°-x)
+
+    print('---', 1, '---')
+    sin1 = 1/sqrt(10)
+    cos1 = 3/sqrt(10)
+    tan1 = 1/3
+    print(sin1, cos1, tan1)
+
+    print('---', 2, '---')
+    sin2 = 5 / 12
+    cos2 = 5/13
+    tan2 = 13/12
+    print(sin2, cos2, tan2)
+
+    #! 底辺はマイナス
+    # sin(135) = 1/√2
+    # cos(135) = -(1/√2)
+    # tan(135) = -1
 
 
 if __name__ == '__main__':
     # angle()
-    # polor()
+    # polar()
 
-    print(V.angle(V(1, 2), V(3, 1)))
-    print(V.polor_to_rectangular(V(5, 30)))
+    # print(V.angle(V(1, 2), V(3, 1)))
+    # print(V.polar_to_rectangular(V(5, 30)))
+
+    tri()
