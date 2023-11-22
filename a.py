@@ -128,10 +128,14 @@ def tri() -> None:
     tan2 = 13/12
     print(sin2, cos2, tan2)
 
+    print('------')
     #! 底辺はマイナス
-    # sin(135) = 1/√2
-    # cos(135) = -(1/√2)
-    # tan(135) = -1
+    # sin135° = 1/√2
+    print(sin(135), 1/sqrt(2))
+    # cos135° = -(1/√2)
+    print(cos(135))
+    # tan135° = -1
+    print(tan(135))
 
 
 if __name__ == '__main__':
