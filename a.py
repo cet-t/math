@@ -123,26 +123,24 @@ def tri() -> None:
     print(sin1, cos1, tan1)
 
     print('---', 2, '---')
-    sin2 = 5 / 12
+    sin2 = 5/12
     cos2 = 5/13
     tan2 = 13/12
     print(sin2, cos2, tan2)
 
     print('------')
-    #! 底辺はマイナス
-    # sin135° = 1/√2
+    # sin135° = √2/2
     print(sin(135), 1/sqrt(2))
-    # cos135° = -(1/√2)
+    # cos135° = -(√2/2)
     print(cos(135))
     # tan135° = -1
     print(tan(135))
 
 
 if __name__ == '__main__':
+    tri()
     # angle()
     # polar()
 
     # print(V.angle(V(1, 2), V(3, 1)))
     # print(V.polar_to_rectangular(V(5, 30)))
-
-    tri()
