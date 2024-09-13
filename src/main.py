@@ -2,6 +2,7 @@ from typing import *  # type: ignore
 import numpy as np
 import math
 
+import numpp
 from vector2 import *
 
 
@@ -125,7 +126,7 @@ def tri() -> None:
 @prefix('円周率の導出')
 def pie():
     print(np.arccos(-1))
-    print(1/(((2*np.sqrt(2))/9801)*sum([(math.factorial(4*k)*(1103+26390*k))/((math.factorial(k)**4)*(396**(4*k))) for k in range(0, 2**8)])))
+    print(1/(((2*np.sqrt(2))/9801)*sum([(math.factorial(4*k)*(1103+26390*k))/((math.factorial(k)**4)*(396**(4*k))) for k in range(0, 2**8, 1)])))
     print(sum([(1/(16**k))*((4/(8*k+1))-(2/(8*k+4))-(1/(8*k+5))-(1/(8*k+6))) for k in range(0, 2**8)]))
     print((2**10)*np.sin(np.pi/(2**10)))
     print(4*(4*np.arctan(1/5)-np.arctan(1/239)))
@@ -136,3 +137,5 @@ if __name__ == '__main__':
     angle()
     polar()
     pie()
+
+    print(numpp.pi())
