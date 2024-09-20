@@ -60,3 +60,10 @@ class Vector2:
 
     def __floordiv__(self, a: 'Vector2') -> 'Vector2':
         return Vector2(self.x // a.x, self.y // a.y)
+
+
+@dataclass
+class Vector3:
+    x: float
+    y: float
+    z: float

@@ -1,9 +1,10 @@
+from random import randint
 from typing import *  # type: ignore
 import numpy as np
 import math
 
 import numpp
-from vector2 import *
+from vector import *
 
 
 class mathematics:
@@ -132,10 +133,23 @@ def pie():
     print(4*(4*np.arctan(1/5)-np.arctan(1/239)))
 
 
+@prefix('法線ベクトル')
+def normal():
+    p1 = Vector3(randint(1, 12), randint(2, 24), randint(3, 36))
+    p2 = Vector3(p1.x*1.2, p1.y*1.2, p1.z*1.2)
+    p3 = Vector3(p2.x*1.2, p2.x*1.2, p2.z*1.2)
+
+    a = Vector3(p2.x-p1.x, p2.y-p1.y, p2.z-p1.z)
+    b = Vector3(p3.x-p1.x, p3.y-p1.y, p3.z-p1.z)
+    normal_vector = Vector3(a.y*b.z-a.z*b.y, a.z*b.x-a.x*b.z, a.x*b.y-a.y*b.x)
+    print(f'normal: ({normal_vector.x},{normal_vector.y},{normal_vector.z})')
+
+
 if __name__ == '__main__':
     tri()
     angle()
     polar()
     pie()
+    normal()
 
-    print(numpp.pi())
+    # print(numpp.pi())
