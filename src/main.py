@@ -135,14 +135,14 @@ def pie():
 
 @prefix('法線ベクトル')
 def normal():
-    p1 = Vector3(randint(1, 12), randint(2, 24), randint(3, 36))
-    p2 = Vector3(p1.x*1.2, p1.y*1.2, p1.z*1.2)
-    p3 = Vector3(p2.x*1.2, p2.x*1.2, p2.z*1.2)
-
-    a = Vector3(p2.x-p1.x, p2.y-p1.y, p2.z-p1.z)
-    b = Vector3(p3.x-p1.x, p3.y-p1.y, p3.z-p1.z)
-    normal_vector = Vector3(a.y*b.z-a.z*b.y, a.z*b.x-a.x*b.z, a.x*b.y-a.y*b.x)
-    print(f'normal: ({normal_vector.x},{normal_vector.y},{normal_vector.z})')
+    # y-f(a)=-1/f'(a)*(x-a)
+    def f(v: Vector2): return (v.x**2 + v.y**2)
+    h = 1e-3
+    p = Vector2(1.2, 9)
+    # 偏微分
+    dx = f(Vector2(p.x+h, p.y))-f(p)/h
+    dy = f(Vector2(p.x, p.y+h))-f(p)/h
+    print('normal vector:', Vector2(-dx, -dy).normalized.__str__())
 
 
 if __name__ == '__main__':

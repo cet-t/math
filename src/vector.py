@@ -67,3 +67,28 @@ class Vector3:
     x: float
     y: float
     z: float
+
+    @staticmethod
+    def cross(a: 'Vector3', b: 'Vector3') -> 'Vector3':
+        return Vector3(a.y*b.z-a.z*b.y, a.z*b.x-a.x*b.z, a.x*b.z-a.z*b.x)
+
+    def __sub__(self, a):
+        match a:
+            case int() | float():
+                return Vector3(self.x-a, self.y-a, self.z-a)
+            case Vector3():
+                return Vector3(self.x-a.x, self.y-a.y, self.z-a.z)
+            case _:
+                return Vector3(0, 0, 0)
+
+    def __mul__(self, a):
+        match a:
+            case int() | float():
+                return Vector3(self.x*a, self.y*a, self.z*a)
+            case Vector3():
+                return Vector3(self.x*a.x, self.y*a.y, self.z*a.z)
+            case _:
+                return Vector3(0, 0, 0)
+
+    def __str__(self):
+        return f'({self.x}, {self.y}, {self.z})'
